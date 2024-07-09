@@ -70,20 +70,20 @@
 | エンドポイント | HTTPメソッド | curlコマンド |
 |----------------|--------------|--------------|
 | **ユーザー関連** |
-| ユーザー登録 | POST | `curl -X POST http://localhost/users -H "Content-Type: application/json" -d '{"username": "newuser", "email": "newuser@example.com", "password_hash": "securepassword"}'` |
-| ユーザー情報取得 | GET | `curl -X GET http://localhost/users/1` |
+| ユーザー登録 | POST | `curl -X POST http://localhost/api/users -H "Content-Type: application/json" -d '{"username": "newuser", "email": "newuser@example.com", "password_hash": "securepassword"}'` |
+| ユーザー情報取得 | GET | `curl -X GET http://localhost/api/users/1` |
 | **記事関連** |
-| 記事作成 | POST | `curl -X POST http://localhost/posts -H "Content-Type: application/json" -d '{"title": "New Blog Post", "content": "This is the content of the new blog post.", "author_id": 1}'` |
-| 記事一覧取得 | GET | `curl -X GET http://localhost/posts` |
-| 記事詳細取得 | GET | `curl -X GET http://localhost/posts/1` |
-| 記事更新 | PUT | `curl -X PUT http://localhost/posts/1 -H "Content-Type: application/json" -d '{"title": "Updated Blog Post", "content": "This is the updated content of the blog post."}'` |
-| 記事削除 | DELETE | `curl -X DELETE http://localhost/posts/1` |
+| 記事作成 | POST | `curl -X POST http://localhost/api/posts -H "Content-Type: application/json" -d '{"title": "New Blog Post", "content": "This is the content of the new blog post.", "author_id": 1}'` |
+| 記事一覧取得 | GET | `curl -X GET http://localhost/api/posts` |
+| 記事詳細取得 | GET | `curl -X GET http://localhost/api/posts/1` |
+| 記事更新 | PUT | `curl -X PUT http://localhost/api/posts/1 -H "Content-Type: application/json" -d '{"title": "Updated Blog Post", "content": "This is the updated content of the blog post."}'` |
+| 記事削除 | DELETE | `curl -X DELETE http://localhost/api/posts/1` |
 | **カテゴリー関連** |
-| カテゴリー作成 | POST | `curl -X POST http://localhost/categories -H "Content-Type: application/json" -d '{"name": "New Category"}'` |
-| カテゴリー一覧取得 | GET | `curl -X GET http://localhost/categories` |
+| カテゴリー作成 | POST | `curl -X POST http://localhost/api/categories -H "Content-Type: application/json" -d '{"name": "New Category"}'` |
+| カテゴリー一覧取得 | GET | `curl -X GET http://localhost/api/categories` |
 | **コメント関連** |
-| コメント作成 | POST | `curl -X POST http://localhost/comments -H "Content-Type: application/json" -d '{"post_id": 1, "author_name": "Commenter", "content": "This is a comment."}'` |
-| コメント一覧取得 | GET | `curl -X GET http://localhost/comments/1` |
+| コメント作成 | POST | `curl -X POST http://localhost/api/comments -H "Content-Type: application/json" -d '{"post_id": 1, "author_name": "Commenter", "content": "This is a comment."}'` |
+| コメント一覧取得 | GET | `curl -X GET http://localhost/api/comments/1` |
 
 # Database
 
