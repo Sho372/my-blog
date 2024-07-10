@@ -1,15 +1,15 @@
 package database
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
-var DB *sql.DB
+var DB *gorm.DB
 
 func InitDB() {
     dbUser := os.Getenv("DB_USER")
@@ -18,16 +18,13 @@ func InitDB() {
     dbPort := os.Getenv("DB_PORT")
     dbName := os.Getenv("DB_NAME")
 
-    dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
-    fmt.Printf("%s:%s@tcp(%s:%s)/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
+    dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", dbUser, dbPassword, dbHost, dbPort, dbName)
 
     var err error
-    DB, err = sql.Open("mysql", dataSourceName)
+    DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{DisableAutomaticPing: true})
     if err != nil {
-        log.Fatal(err)
+        log.Fatalf("Could not connect to the database: %v", err)
     }
-    if err = DB.Ping(); err != nil {
-        fmt.Println("hhhh")
-        log.Fatal(err)
-    }
+
+    fmt.Println("Successfully connected to the database!")
 }
