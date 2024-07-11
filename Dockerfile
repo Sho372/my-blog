@@ -1,5 +1,5 @@
 # Stage 1: Build the Go application
-FROM golang:1.18-alpine AS builder
+FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
@@ -11,13 +11,13 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 # airを特定バージョンでインストール
-RUN go install github.com/cosmtrek/air@v1.29.0
+RUN go install github.com/air-verse/air@v1.52.3
 
 # ソースコードをコピー
 COPY . .
 
 # Stage 2: Run the Go application with Air
-FROM golang:1.18-alpine
+FROM golang:1.22-alpine
 
 WORKDIR /app
 
