@@ -1,4 +1,33 @@
+# Makefile タスク一覧
+
+| コマンド         | 説明                                           | 使用方法例                                      |
+|------------------|------------------------------------------------|------------------------------------------------|
+| `make restart`   | コンテナの再起動                               | `make restart`                                 |
+| `make db-init`   | DBコンテナの初期化                             | `make db-init`                                 |
+| `make app-rebuild` | appコンテナのビルドと再起動                   | `make app-rebuild`                             |
+| `make rebuild`   | 全コンテナのビルドと再起動                     | `make rebuild`                                 |
+| `make logs`      | ログの表示                                     | `make logs`                                    |
+| `make stop`      | コンテナの停止                                 | `make stop`                                    |
+| `make clean`     | コンテナの停止とデータボリュームの削除         | `make clean`                                   |
+| `make test`      | 全テストの実行                                 | `make test`                                    |
+| `make test-file` | 特定のテストファイルを実行                     | `make test-file FILE=./path/to/your_test.go`   |
+| `make test-func` | 特定のテスト関数を実行                         | `make test-func FUNC=TestFunctionName`         |
+
 # Docker
+
+## 再起動
+
+```bash
+docker-compose down
+docker-compose up -d
+```
+
+## appコンテナの再ビルドと再起動
+
+```
+docker-compose build app
+docker-compose up -d
+```
 
 ## Dockerコマンド一覧
 
@@ -147,3 +176,33 @@ erDiagram
 - **CATEGORIES と POST_CATEGORIES**
   - `CATEGORIES` テーブルの `id` と `POST_CATEGORIES` テーブルの `category_id` によってリレーションが形成されます。
 
+# ネットワーク図
+
+| ネットワーク名       | コンポーネント       | コンテナ名       | ポート          |
+|----------------------|----------------------|------------------|-----------------|
+| **frontend-network** | Nginx                | blog_nginx       | 80:80           |
+|                      | Next.js Frontend     | blog_frontend    | 3000:3000       |
+| **backend-network**  | Golang Backend       | blog_app         | 8080:8080       |
+|                      | MySQL Database       | blog_mysql       | 3306:3306       |
+
+```mermaid
+graph TD
+    A[User] -->|HTTP Request| B[Nginx]
+    B -->|Proxy to| C[Next.js Frontend]
+    B -->|Proxy to| D[Golang Backend]
+    D -->|Database Connection| E[MySQL Database]
+    
+    subgraph frontend-network
+        B[Nginx<br/>Container: blog_nginx<br/>Ports: 80:80]
+        C[Next.js Frontend<br/>Container: blog_frontend<br/>Ports: 3000:3000]
+    end
+
+    subgraph backend-network
+        D[Golang Backend<br/>Container: blog_app<br/>Ports: 8080:8080]
+        E[MySQL Database<br/>Container: blog_mysql<br/>Ports: 3306:3306]
+    end
+
+    B -- backend-network --> D
+    D -- backend-network --> E
+    C -- frontend-network --> B
+```
