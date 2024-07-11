@@ -1,0 +1,22 @@
+# Config file for Air
+
+[build]
+  cmd = "go build -o blog ."
+  bin = "./blog"
+  full_bin = "./blog"
+  include_ext = ["go"]  # 監視する拡張子を指定
+  exclude_dir = ["frontend", "assets", "tmp", "vendor"]  # 監視しないディレクトリを指定
+  exclude_file = []
+  follow_symlink = true
+  force_polling = false
+  poll_interval = 1000
+  build_delay = 50
+  stop_on_error = true
+
+[log]
+  level = "debug"
+  color = true
+  timestamp = false
+
+[plugins]
+  paths = []

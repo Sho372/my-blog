@@ -33,6 +33,8 @@ services:
     networks:
       - frontend-network
       - backend-network
+    volumes:
+      - .:/app  # ホスト側のディレクトリをコンテナにマウント
 
   nginx:
     image: nginx:alpine
