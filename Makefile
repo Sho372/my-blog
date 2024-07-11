@@ -1,5 +1,6 @@
 # 定義
 DOCKER_COMPOSE = docker-compose
+APP_CONTAINER = blog_app
 
 # コンテナの再起動
 .PHONY: restart
@@ -38,3 +39,20 @@ stop:
 .PHONY: clean
 clean:
 	$(DOCKER_COMPOSE) down -v
+
+# 全テストの実行
+.PHONY: test
+test:
+	docker exec $(APP_CONTAINER) sh -c "go test ./..."
+
+# 特定のテストファイルを実行
+.PHONY: test-file
+test-file:
+	@test -n "$(FILE)" || (echo "FILE is not set"; exit 1)
+	docker exec $(APP_CONTAINER) sh -c "go test $(FILE)"
+
+# 特定のテスト関数を実行
+.PHONY: test-func
+test-func:
+	@test -n "$(FUNC)" || (echo "FUNC is not set"; exit 1)
+	docker exec $(APP_CONTAINER) sh -c "go test -run $(FUNC)"
