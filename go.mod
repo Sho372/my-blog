@@ -8,7 +8,11 @@ require (
 	gorm.io/gorm v1.25.11
 )
 
-require github.com/mattn/go-sqlite3 v1.14.22 // indirect
+require (
+	github.com/felixge/httpsnoop v1.0.3 // indirect
+	github.com/gorilla/handlers v1.5.2
+	github.com/mattn/go-sqlite3 v1.14.22 // indirect
+)
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect

@@ -2,7 +2,10 @@ package router
 
 import (
 	"my-blog/handlers"
+	"net/http"
+	"time"
 
+	gorillahandlers "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -28,5 +31,19 @@ func InitRouter() *mux.Router {
     r.HandleFunc("/comments", handlers.CreateComment).Methods("POST")
     r.HandleFunc("/comments/{post_id}", handlers.GetComments).Methods("GET")
 
-    return r
+    return r 
+}
+
+func ApplyCORS(router *mux.Router) http.Handler {
+    // CORS 設定
+    corsOptions := gorillahandlers.CORS(
+        gorillahandlers.AllowedOrigins([]string{"http://localhost:3000"}),
+        gorillahandlers.AllowedMethods([]string{"OPTIONS", "GET", "POST", "PUT", "DELETE"}),
+        gorillahandlers.AllowedHeaders([]string{"X-Requested-With", "Origin", "Content-Type", "Accept"}),
+        gorillahandlers.ExposedHeaders([]string{"Content-Length"}),
+        gorillahandlers.AllowCredentials(),
+        gorillahandlers.MaxAge(int((12 * time.Hour).Seconds())),
+    )
+
+    return corsOptions(router)
 }
