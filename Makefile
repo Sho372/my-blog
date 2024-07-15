@@ -1,5 +1,5 @@
 # 定義
-DOCKER_COMPOSE = docker-compose
+DOCKER_COMPOSE = docker compose
 APP_CONTAINER = blog_app
 
 # コンテナの再起動
