@@ -10,5 +10,6 @@ import (
 func main() {
     database.InitDB()
     r := router.InitRouter()
-    log.Fatal(http.ListenAndServe(":8080", r))
+	corsRouter := router.ApplyCORS(r)
+    log.Fatal(http.ListenAndServe(":8080", corsRouter))
 }

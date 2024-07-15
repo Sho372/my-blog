@@ -39,7 +39,7 @@ func ApplyCORS(router *mux.Router) http.Handler {
     corsOptions := gorillahandlers.CORS(
         gorillahandlers.AllowedOrigins([]string{"http://localhost:3000"}),
         gorillahandlers.AllowedMethods([]string{"OPTIONS", "GET", "POST", "PUT", "DELETE"}),
-        gorillahandlers.AllowedHeaders([]string{"X-Requested-With", "Origin", "Content-Type", "Accept"}),
+        gorillahandlers.AllowedHeaders([]string{"Origin", "Content-Type", "Accept"}),
         gorillahandlers.ExposedHeaders([]string{"Content-Length"}),
         gorillahandlers.AllowCredentials(),
         gorillahandlers.MaxAge(int((12 * time.Hour).Seconds())),
