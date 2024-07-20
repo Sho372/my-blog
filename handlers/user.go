@@ -10,15 +10,37 @@ import (
 	"my-blog/models"
 
 	"github.com/gorilla/mux"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
+// ユーザー登録情報
+type RegisterCredentials struct {
+    Username string `json:"username"`
+    Email    string `json:"email"`
+    Password string `json:"password"`
+}
+
 // CreateUser creates a new user
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-    var user models.User
-    if err := json.NewDecoder(r.Body).Decode(&user); err != nil {
+    var creds RegisterCredentials
+    if err := json.NewDecoder(r.Body).Decode(&creds); err != nil {
         http.Error(w, err.Error(), http.StatusBadRequest)
         return
+    }
+
+    // パスワードのハッシュ化
+    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(creds.Password), bcrypt.DefaultCost)
+    if err != nil {
+        http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+        return
+    }
+
+    // 新しいユーザーの作成
+    user := models.User{
+        Username: creds.Username,
+        Email:    creds.Email,
+        PasswordHash: string(hashedPassword),
     }
 
     if err := database.DB.Create(&user).Error; err != nil {
@@ -39,7 +61,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    fmt.Println("xxxx")
+    fmt.Println("yyyy")
     var user models.User
     if err := database.DB.First(&user, id).Error; err != nil {
         if err == gorm.ErrRecordNotFound {

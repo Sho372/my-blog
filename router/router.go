@@ -10,28 +10,36 @@ import (
 )
 
 func InitRouter() *mux.Router {
-    r := mux.NewRouter()
+    router := mux.NewRouter()
 
+    // 認証が不要なエンドポイント
+    router.HandleFunc("/login", handlers.Login).Methods("POST")
+    router.HandleFunc("/logout", handlers.Logout).Methods("POST")
+    router.HandleFunc("/check-auth", handlers.CheckAuth).Methods("GET")
     // User routes
-    r.HandleFunc("/users", handlers.CreateUser).Methods("POST")
-    r.HandleFunc("/users/{id}", handlers.GetUser).Methods("GET")
-
+    router.HandleFunc("/users", handlers.CreateUser).Methods("POST")
+    router.HandleFunc("/users/{id}", handlers.GetUser).Methods("GET")
     // Post routes
-    r.HandleFunc("/posts", handlers.CreatePost).Methods("POST")
-    r.HandleFunc("/posts", handlers.GetPosts).Methods("GET")
-    r.HandleFunc("/posts/{id}", handlers.GetPost).Methods("GET")
+    router.HandleFunc("/posts", handlers.GetPosts).Methods("GET")
+    router.HandleFunc("/posts/{id}", handlers.GetPost).Methods("GET")
+    // Category routes
+    router.HandleFunc("/categories", handlers.GetCategories).Methods("GET")
+    // Comment routes
+    router.HandleFunc("/comments/{post_id}", handlers.GetComments).Methods("GET")
+
+    // 認証が必要なエンドポイント
+    authenticatedRouter := router.PathPrefix("/api").Subrouter()
+    authenticatedRouter.Use(handlers.AuthMiddleware)
+    // Post routes
+    authenticatedRouter.HandleFunc("/posts", handlers.CreatePost).Methods("POST")
     // r.HandleFunc("/posts/{id}", handlers.UpdatePost).Methods("PUT")
     // r.HandleFunc("/posts/{id}", handlers.DeletePost).Methods("DELETE")
-
     // Category routes
-    r.HandleFunc("/categories", handlers.CreateCategory).Methods("POST")
-    r.HandleFunc("/categories", handlers.GetCategories).Methods("GET")
-
+    authenticatedRouter.HandleFunc("/categories", handlers.CreateCategory).Methods("POST")
     // Comment routes
-    r.HandleFunc("/comments", handlers.CreateComment).Methods("POST")
-    r.HandleFunc("/comments/{post_id}", handlers.GetComments).Methods("GET")
+    authenticatedRouter.HandleFunc("/comments", handlers.CreateComment).Methods("POST")
 
-    return r 
+    return router 
 }
 
 func ApplyCORS(router *mux.Router) http.Handler {
