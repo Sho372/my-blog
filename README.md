@@ -206,3 +206,57 @@ graph TD
     D -- backend-network --> E
     C -- frontend-network --> B
 ```
+
+# 実装
+
+## 認証
+
+### 1. セッションベース認証
+
+- セッションストアにRedisを使う
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Client
+    participant Server
+    participant SessionStore
+
+    User->>+Client: Enter credentials
+    Client->>+Server: POST /login
+    Server->>+SessionStore: Validate credentials and create session
+    SessionStore-->>-Server: Return session ID
+    Server-->>-Client: Set-Cookie: session ID
+
+    User->>+Client: Access protected resource
+    Client->>+Server: GET /api/resource (with session ID)
+    Server->>+SessionStore: Validate session ID
+    SessionStore-->>-Server: Session valid
+    Server-->>-Client: Return protected resource
+
+    User->>+Client: Logout
+    Client->>+Server: POST /logout (with session ID)
+    Server->>+SessionStore: Invalidate session ID
+    SessionStore-->>-Server: Session invalidated
+    Server-->>-Client: Confirmation of logout
+```
+
+#### サンプルリクエスト
+
+1. ログイン
+    ```shell
+    curl -X POST http://localhost/api/login -c cookie.txt -d '{"email":"test@example.com","password":"password"}' -H "Content-Type: application/json"
+    ```
+2. セッション情報確認
+    ```shell
+    curl -X GET http://localhost/api/check-auth -b cookie.txt
+    {"authenticated": true}
+    ```
+
+### 2. トークンベース認証（JWT - JSON Web Token）
+
+未実装
+
+### 3. OAuth 2.0
+
+未実装
