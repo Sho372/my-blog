@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"my-blog/database"
+	"my-blog/middlewares"
 	"my-blog/router"
 	"net/http"
 )
@@ -10,6 +11,7 @@ import (
 func main() {
     database.InitDB()
     r := router.InitRouter()
-	corsRouter := router.ApplyCORS(r)
-    log.Fatal(http.ListenAndServe(":8080", corsRouter))
+	wrappedRouter := middlewares.NewLogger(router.ApplyCORS(r))
+
+    log.Fatal(http.ListenAndServe(":8080", wrappedRouter))
 }
