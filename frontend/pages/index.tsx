@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import api from '../utils/api';
-import { useRouter } from 'next/router';
 
 interface Post {
   id: number;
@@ -12,48 +11,26 @@ interface Post {
 
 const HomePage: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      try {
-        const response = await api.get('/check-auth');
-        setIsLoggedIn(response.data.authenticated);
-      } catch (error) {
-        setIsLoggedIn(false);
-      }
-    };
-
     const fetchPosts = async () => {
       try {
         const response = await api.get('/posts');
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    checkLoginStatus();
     fetchPosts();
-
-    // 5分ごとにログイン状態を確認
-    const interval = setInterval(() => {
-      checkLoginStatus();
-    }, 300000); // 300,000ミリ秒 = 5分
-
-    return () => clearInterval(interval);
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      await api.post('/logout');
-      setIsLoggedIn(false);
-      router.push('/');
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
-  };
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -71,20 +48,6 @@ const HomePage: React.FC = () => {
           </li>
         ))}
       </ul>
-      <div className="mt-4">
-        {!isLoggedIn ? (
-          <>
-            <Link href="/login">
-              <a className="text-blue-500 hover:underline mr-4">Login</a>
-            </Link>
-            <Link href="/register">
-              <a className="text-blue-500 hover:underline">Register</a>
-            </Link>
-          </>
-        ) : (
-          <button onClick={handleLogout} className="text-blue-500 hover:underline">Logout</button>
-        )}
-      </div>
     </div>
   );
 };

@@ -1,10 +1,17 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import api from '../utils/api';
 
-const LoginPage: React.FC = () => {
+interface LoginPageProps {
+  isLoggedIn: boolean;
+  setIsLoggedIn: (loggedIn: boolean) => void;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,6 +21,10 @@ const LoginPage: React.FC = () => {
         password,
       });
       console.log('User logged in:', response.data);
+      // checkAuthを実行してログイン状態を更新
+      const authResponse = await api.get('/check-auth');
+      setIsLoggedIn(authResponse.data.authenticated);
+      router.push('/');
     } catch (error) {
       console.error('Error logging in user:', error);
     }
