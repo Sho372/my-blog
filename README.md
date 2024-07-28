@@ -2,13 +2,13 @@
 
 | コマンド         | 説明                                           | 使用方法例                                      |
 |------------------|------------------------------------------------|------------------------------------------------|
-| `make restart`   | コンテナの再起動                               | `make restart`                                 |
-| `make db-init`   | DBコンテナの初期化                             | `make db-init`                                 |
-| `make app-rebuild` | appコンテナのビルドと再起動                   | `make app-rebuild`                             |
-| `make rebuild`   | 全コンテナのビルドと再起動                     | `make rebuild`                                 |
+| `make restart`   | コンテナーの再起動                               | `make restart`                                 |
+| `make db-init`   | DBコンテナーの初期化                             | `make db-init`                                 |
+| `make app-rebuild` | appコンテナーのビルドと再起動                   | `make app-rebuild`                             |
+| `make rebuild`   | 全コンテナーのビルドと再起動                     | `make rebuild`                                 |
 | `make logs`      | ログの表示                                     | `make logs`                                    |
-| `make stop`      | コンテナの停止                                 | `make stop`                                    |
-| `make clean`     | コンテナの停止とデータボリュームの削除         | `make clean`                                   |
+| `make stop`      | コンテナーの停止                                 | `make stop`                                    |
+| `make clean`     | コンテナーの停止とデータボリュームの削除         | `make clean`                                   |
 | `make test`      | 全テストの実行                                 | `make test`                                    |
 | `make test-file` | 特定のテストファイルを実行                     | `make test-file FILE=./path/to/your_test.go`   |
 | `make test-func` | 特定のテスト関数を実行                         | `make test-func FUNC=TestFunctionName`         |
@@ -22,7 +22,7 @@ docker-compose down
 docker-compose up -d
 ```
 
-## appコンテナの再ビルドと再起動
+## appコンテナーの再ビルドと再起動
 
 ```
 docker-compose build app
@@ -34,33 +34,33 @@ docker-compose up -d
 | コマンド | 説明 |
 |----------|------|
 | `docker-compose up -d` | Docker Composeで定義されたサービスをバックグラウンドで起動します。 |
-| `docker-compose down` | 起動中のDocker Composeサービスを停止し、コンテナを削除します。ボリュームは削除しません。 |
-| `docker-compose down -v` | 起動中のDocker Composeサービスを停止し、コンテナとボリュームを削除します。 |
-| `docker-compose stop` | 起動中のDocker Composeサービスを停止しますが、コンテナは削除しません。 |
+| `docker-compose down` | 起動中のDocker Composeサービスを停止し、コンテナーを削除します。ボリュームは削除しません。 |
+| `docker-compose down -v` | 起動中のDocker Composeサービスを停止し、コンテナーとボリュームを削除します。 |
+| `docker-compose stop` | 起動中のDocker Composeサービスを停止しますが、コンテナーは削除しません。 |
 | `docker-compose start` | 停止中のDocker Composeサービスを再起動します。 |
 | `docker-compose restart` | 起動中のDocker Composeサービスを再起動します。 |
-| `docker-compose logs` | 全てのサービスのログを表示します。 |
+| `docker-compose logs` | すべてのサービスのログを表示します。 |
 | `docker-compose logs [service_name]` | 指定したサービスのログを表示します。 |
 | `docker-compose ps` | 現在のDocker Composeサービスの状態を表示します。 |
-| `docker exec -it [container_name] /bin/sh` | 指定したコンテナにシェルアクセスします。 |
-| `docker exec -it [container_name] /bin/bash` | 指定したコンテナにBashシェルでアクセスします（Bashがインストールされている場合）。 |
+| `docker exec -it [container_name] /bin/sh` | 指定したコンテナーにシェルアクセスします。 |
+| `docker exec -it [container_name] /bin/bash` | 指定したコンテナーにBashシェルでアクセスします（Bashがインストールされている場合）。 |
 | `docker volume ls` | すべてのDockerボリュームをリストします。 |
 | `docker volume rm [volume_name]` | 指定したDockerボリュームを削除します。 |
 | `docker network ls` | すべてのDockerネットワークをリストします。 |
 | `docker network rm [network_name]` | 指定したDockerネットワークを削除します。 |
 | `docker images` | すべてのDockerイメージをリストします。 |
 | `docker rmi [image_id]` | 指定したDockerイメージを削除します。 |
-| `docker system prune` | 使用されていないすべてのコンテナ、ネットワーク、イメージを削除します（ボリュームは削除しません）。 |
-| `docker system prune -a` | 使用されていないすべてのコンテナ、ネットワーク、イメージ、およびボリュームを削除します。 |
+| `docker system prune` | 使用されていないすべてのコンテナー、ネットワーク、イメージを削除します（ボリュームは削除しません）。 |
+| `docker system prune -a` | 使用されていないすべてのコンテナー、ネットワーク、イメージ、およびボリュームを削除します。 |
 | `docker-compose build` | Docker Composeで定義されたサービスのイメージをビルドします。 |
 | `docker-compose build --no-cache` | キャッシュを使用せずにイメージを再ビルドします。 |
 | `docker-compose down && docker-compose up --build -d` | Docker Composeサービスを停止し、イメージを再ビルドしてバックグラウンドで起動します。 |
 | `docker-compose down && docker-compose build --no-cache && docker-compose up -d` | Docker Composeサービスを停止し、キャッシュをクリアしてイメージを再ビルドし、バックグラウンドで起動します。 |
-| `docker-compose logs -f` | 全てのサービスのログをフォロー（リアルタイムで表示）します。 |
-| `docker-compose up --force-recreate -d` | 既存のコンテナを強制的に再作成して、Docker Composeサービスをバックグラウンドで起動します。 |
+| `docker-compose logs -f` | すべてのサービスのログをフォロー（リアルタイムで表示）します。 |
+| `docker-compose up --force-recreate -d` | 既存のコンテナーを強制的に再作成して、Docker Composeサービスをバックグラウンドで起動します。 |
 | `docker network inspect [network_name]` | 指定したDockerネットワークの詳細情報を表示します。 |
 | `docker volume inspect [volume_name]` | 指定したDockerボリュームの詳細情報を表示します。 |
-| `docker-compose rm -f` | 停止されたコンテナを強制的に削除します。 |
+| `docker-compose rm -f` | 停止されたコンテナーを強制的に削除します。 |
 
 ## コマンドの使い方の例
 
@@ -70,13 +70,13 @@ docker-compose up -d
     docker-compose up -d
     ```
 
-2. **Docker Composeサービスの停止とコンテナの削除**
+2. **Docker Composeサービスの停止とコンテナーの削除**
 
     ```bash
     docker-compose down
     ```
 
-3. **Docker Composeサービスの停止とコンテナ、ボリュームの削除**
+3. **Docker Composeサービスの停止とコンテナー、ボリュームの削除**
 
     ```bash
     docker-compose down -v
@@ -88,7 +88,7 @@ docker-compose up -d
     docker-compose logs app
     ```
 
-5. **特定のコンテナにシェルアクセス**
+5. **特定のコンテナーにシェルアクセス**
 
     ```bash
     docker exec -it blog_app /bin/sh
@@ -178,7 +178,7 @@ erDiagram
 
 # ネットワーク図
 
-| ネットワーク名       | コンポーネント       | コンテナ名       | ポート          |
+| ネットワーク名       | コンポーネント       | コンテナー名       | ポート          |
 |----------------------|----------------------|------------------|-----------------|
 | **frontend-network** | Nginx                | blog_nginx       | 80:80           |
 |                      | Next.js Frontend     | blog_frontend    | 3000:3000       |
