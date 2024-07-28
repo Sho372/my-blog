@@ -28,7 +28,7 @@ func InitRouter() *mux.Router {
     router.HandleFunc("/comments/{post_id}", handlers.GetComments).Methods("GET")
 
     // 認証が必要なエンドポイント
-    authenticatedRouter := router.PathPrefix("/api").Subrouter()
+    authenticatedRouter := router.PathPrefix("/").Subrouter()
     authenticatedRouter.Use(handlers.AuthMiddleware)
     // Post routes
     authenticatedRouter.HandleFunc("/posts", handlers.CreatePost).Methods("POST")

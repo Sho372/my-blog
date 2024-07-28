@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"database/sql"
+	"time"
+)
 
 type Post struct {
     ID         int       `json:"id" gorm:"primary_key"`
@@ -9,5 +12,16 @@ type Post struct {
     AuthorID   int       `json:"author_id"`
     CreatedAt  time.Time `json:"created_at"`
     UpdatedAt  time.Time `json:"updated_at"`
-    PublishedAt time.Time `json:"published_at"`
+    PublishedAt NullTime `json:"published_at"`
+}
+
+type NullTime struct {
+    sql.NullTime
+}
+
+func (nt NullTime) MarshalJSON() ([]byte, error) {
+    if !nt.Valid {
+        return []byte(`null`), nil
+    }
+    return []byte(`"` + nt.Time.Format(time.RFC3339) + `"`), nil
 }

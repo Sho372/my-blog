@@ -18,6 +18,8 @@ func CreatePost(w http.ResponseWriter, r *http.Request) {
         http.Error(w, err.Error(), http.StatusBadRequest)
         return
     }
+    // TODO: セッションからユーザーIDを取得する
+    post.AuthorID = 13
 
     if err := database.DB.Create(&post).Error; err != nil {
         http.Error(w, err.Error(), http.StatusInternalServerError)
