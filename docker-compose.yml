@@ -55,11 +55,14 @@ services:
       dockerfile: Dockerfile
     container_name: blog_frontend
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     ports:
       - "3000:3000"
     networks:
       - frontend-network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
 
   redis:
     image: redis:alpine
