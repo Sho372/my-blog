@@ -53,18 +53,18 @@ const Layout: React.FC<LayoutProps> = ({ children, isLoggedIn, setIsLoggedIn }) 
             <>
               {!isLoggedIn ? (
                 <>
-                  <Link href="/register">
-                    <a className="text-white hover:underline mr-4">Register</a>
+                  <Link href="/register" className="text-white hover:underline mr-4">
+                    Register
                   </Link>
-                  <Link href="/login">
-                    <a className="text-white hover:underline">Login</a>
+                  <Link href="/login" className="text-white hover:underline">
+                    Login
                   </Link>
                 </>
               ) : (
                 <>
                   <button onClick={handleLogout} className="text-white hover:underline mr-4">Logout</button>
-                  <Link href="/post/new">
-                    <a className="text-white hover:underline">Add New Post</a>
+                  <Link href="/post/new" className="text-white hover:underline">
+                    Add New Post
                   </Link>
                 </>
               )}

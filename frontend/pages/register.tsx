@@ -54,8 +54,8 @@ const RegisterPage: React.FC = () => {
         </div>
         <button type="submit" className="bg-blue-500 text-white p-2">Register</button>
       </form>
-      <Link href="/">
-        <a className="text-blue-500 hover:underline mt-4 inline-block">Go back to home</a>
+      <Link href="/" className="text-blue-500 hover:underline mt-4 inline-block">
+        Go back to home
       </Link>
     </div>
   );

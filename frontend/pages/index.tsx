@@ -38,8 +38,8 @@ const HomePage: React.FC = () => {
       <ul>
         {posts.map(post => (
           <li key={post.id} className="mb-2">
-            <Link href={`/post/${post.id}`}>
-              <a className="text-blue-500 hover:underline">{post.title}</a>
+            <Link href={`/post/${post.id}`} className="text-blue-500 hover:underline">
+              {post.title}
             </Link>
             <div>
               <span>Published: {post.published_at}</span>

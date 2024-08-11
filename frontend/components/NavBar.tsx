@@ -5,15 +5,15 @@ const NavBar: React.FC = () => {
   return (
     <nav className="bg-blue-500 p-4 text-white">
       <div className="container mx-auto flex justify-between">
-        <Link href="/">
-          <a className="text-xl font-bold">Blog</a>
+        <Link href="/" className="text-xl font-bold">
+          Blog
         </Link>
         <div>
-          <Link href="/register">
-            <a className="mr-4">Register</a>
+          <Link href="/register" className="mr-4">
+            Register
           </Link>
           <Link href="/login">
-            <a>Login</a>
+            Login
           </Link>
         </div>
       </div>

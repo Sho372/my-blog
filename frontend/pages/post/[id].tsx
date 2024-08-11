@@ -56,8 +56,8 @@ const PostPage: React.FC = () => {
       <p className="mt-4">{post.content}</p>
       <button onClick={handleEdit} className="bg-yellow-500 text-white p-2 mr-2">Edit</button>
       <button onClick={handleDelete} className="bg-red-500 text-white p-2">Delete</button>
-      <Link href="/">
-        <a className="text-blue-500 hover:underline mt-4 inline-block">Go back to home</a>
+      <Link href="/" className="text-blue-500 hover:underline mt-4 inline-block">
+        Go back to home
       </Link>
     </div>
   );
