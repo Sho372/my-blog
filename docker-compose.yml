@@ -19,7 +19,7 @@ services:
 
   app:
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     container_name: blog_app
     environment:
@@ -34,7 +34,7 @@ services:
       - frontend-network
       - backend-network
     volumes:
-      - .:/app  # ホスト側のディレクトリをコンテナにマウント
+      - ./backend:/app  # ホスト側のディレクトリをコンテナにマウント
 
   nginx:
     image: nginx:alpine
