@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-// ci test
+// ci test2
 func main() {
     database.InitDB()
     r := router.InitRouter()
