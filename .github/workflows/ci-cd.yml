@@ -1,12 +1,64 @@
-name: CI/CD Pipeline
+name: CI Pipeline
 
 on:
   push:
     branches:
-      - ci-cd
+      - main
+    paths:
+      - 'frontend/**'  # フロントエンドのコードが変更されたとき
+      - 'backend/**'   # バックエンドのコードが変更されたとき
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'  # フロントエンドのコードが変更されたとき
+      - 'backend/**'   # バックエンドのコードが変更されたとき
 
 jobs:
-  build:
+  # フロントエンドのテスト
+  frontend-test:
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, 'frontend') || contains(github.event.pull_request.head.ref, 'frontend') || github.event.pull_request != '' && contains(github.event.pull_request.base.ref, 'main')
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "hello world"
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run tests
+      run: npm test
+
+  # バックエンドのテスト
+  backend-test:
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, 'backend') || contains(github.event.pull_request.head.ref, 'backend') || github.event.pull_request != '' && contains(github.event.pull_request.base.ref, 'main')
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.22
+
+    - name: Cache Go modules
+      uses: actions/cache@v2
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Install dependencies
+      run: go mod download
+
+    - name: Run tests
+      run: go test ./...
