@@ -1,3 +1,5 @@
+[![CI Pipeline](https://github.com/Sho372/my-blog/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Sho372/my-blog/actions/workflows/ci-cd.yml)
+
 # Makefile タスク一覧
 
 | コマンド         | 説明                                           | 使用方法例                                      |
