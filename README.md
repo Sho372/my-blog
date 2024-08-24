@@ -1,4 +1,4 @@
-[![CI Pipeline](https://github.com/Sho372/my-blog/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Sho372/my-blog/actions/workflows/ci-cd.yml)
+[![backend](https://github.com/Sho372/my-blog/actions/workflows/backend.yml/badge.svg)](https://github.com/Sho372/my-blog/actions/workflows/backend.yml)
 
 # Makefile タスク一覧
 
