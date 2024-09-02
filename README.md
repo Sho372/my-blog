@@ -1,3 +1,5 @@
+[![backend](https://github.com/Sho372/my-blog/actions/workflows/backend.yml/badge.svg)](https://github.com/Sho372/my-blog/actions/workflows/backend.yml)
+
 # Makefile タスク一覧
 
 | コマンド         | 説明                                           | 使用方法例                                      |
