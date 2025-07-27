@@ -9,6 +9,9 @@ const NavBar: React.FC = () => {
           Blog
         </Link>
         <div>
+          <Link href="/notion" className="mr-4">
+            Notion
+          </Link>
           <Link href="/register" className="mr-4">
             Register
           </Link>

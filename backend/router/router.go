@@ -26,6 +26,8 @@ func InitRouter() *mux.Router {
     router.HandleFunc("/categories", handlers.GetCategories).Methods("GET")
     // Comment routes
     router.HandleFunc("/comments/{post_id}", handlers.GetComments).Methods("GET")
+    // Notion routes
+    router.HandleFunc("/notion/pages", handlers.NewNotionHandler().GetPages).Methods("GET")
 
     // 認証が必要なエンドポイント
     authenticatedRouter := router.PathPrefix("/").Subrouter()
