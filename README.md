@@ -96,6 +96,30 @@ docker-compose up -d
     docker exec -it blog_app /bin/sh
     ```
 
+# 機能
+
+## Notion Integration
+
+このプロジェクトには、Notion APIを使用してページ一覧を表示する機能が含まれています。
+
+### セットアップ
+
+1. Notion Integrationを作成
+2. 環境変数を設定
+3. データベースを共有
+
+詳細なセットアップ手順は [NOTION_SETUP.md](./NOTION_SETUP.md) を参照してください。
+
+### 使用方法
+
+- ナビゲーションバーの "Notion" リンクをクリック
+- Notionページの一覧が表示されます
+- 各ページをクリックするとNotionで開きます
+
+## API エンドポイント
+
+- `GET /notion/pages` - Notionページ一覧を取得
+
 # curlサンプル一覧（Nginx経由）
 
 | エンドポイント | HTTPメソッド | curlコマンド |

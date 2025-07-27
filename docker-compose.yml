@@ -28,6 +28,8 @@ services:
       DB_USER: blog_user
       DB_PASSWORD: blog_password
       DB_NAME: blog
+      NOTION_TOKEN: ${NOTION_TOKEN:-}
+      NOTION_DATABASE_ID: ${NOTION_DATABASE_ID:-}
     depends_on:
       - mysql
     networks:
